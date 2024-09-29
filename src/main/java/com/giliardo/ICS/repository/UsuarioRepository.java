@@ -1,7 +1,9 @@
 package com.giliardo.ICS.repository;
 
 import com.giliardo.ICS.entity.Usuario;
+
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -11,5 +13,5 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     // Optional<Usuario> findById(Long id); -> Retorna um usuário pelo ID
     // Usuario save(Usuario usuario); -> Salva ou atualiza um usuário
     // void delete(Usuario usuario); -> Exclui um usuário
-
+    UserDetails findByEmail(String email);
 }
