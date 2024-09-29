@@ -12,13 +12,15 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
-@Entity
+@Table(name = "operacao")
+@Entity(name = "operacao")
 public class Operacao {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     private LocalDate data;
 
@@ -35,11 +37,11 @@ public class Operacao {
     @JoinColumn(name = "produto_id")
     private Produto produto;
 
-    public int getId() {
+    public Long getId() {
         return this.id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
