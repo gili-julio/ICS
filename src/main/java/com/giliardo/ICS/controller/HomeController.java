@@ -15,4 +15,14 @@ public class HomeController {
         return "index";
     }
 
+    @GetMapping("/login")
+    public String telaLogin(Model model) {
+        return "login";
+    }
+
+    @GetMapping("/teste")
+    public String telaTeste(Model model) {
+        return "teste";
+    }
+
 }
