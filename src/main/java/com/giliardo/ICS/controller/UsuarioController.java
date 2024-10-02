@@ -24,15 +24,15 @@ public class UsuarioController {
         return ResponseEntity.ok("sucesso!");
     }
 
-    @GetMapping("/listar")
+    @GetMapping("/auth/listar")
     public String listarUsuarios(Model model) {
         model.addAttribute("usuarios", usuarioRepository.findAll());
-        return "usuarios/lista";
+        return "auth/lista";
     }
 
-    @GetMapping("/listar/vdd")
+    @GetMapping("/listar")
     public String listarFalso(Model model) {
-        return "usuarios/falsaLista";
+        return "usuarios/lista";
     }
 
     @GetMapping("/cadastrar")
