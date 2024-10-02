@@ -33,12 +33,15 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
                         .requestMatchers(HttpMethod.GET, "/usuarios/entrar").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/usuarios/listar/vdd").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/usuarios/listar").permitAll()
                         .requestMatchers(HttpMethod.GET, "/").permitAll()
                         .anyRequest().authenticated())
                 .formLogin(form -> form
                         .loginPage("/usuarios/entrar")
-                        .defaultSuccessUrl("/", true))
+                        .usernameParameter("email")
+                        .passwordParameter("senha")
+                        .defaultSuccessUrl("/usuarios/listar", true)
+                        .permitAll())
                 .logout(logout -> logout.permitAll())
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();

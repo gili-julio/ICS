@@ -27,24 +27,24 @@ public class UsuarioController {
     @GetMapping("/auth/listar")
     public String listarUsuarios(Model model) {
         model.addAttribute("usuarios", usuarioRepository.findAll());
-        return "auth/lista";
+        return "auth/usuarios-lista";
     }
 
     @GetMapping("/listar")
     public String listarFalso(Model model) {
-        return "usuarios/lista";
+        return "public/usuarios-lista";
     }
 
     @GetMapping("/cadastrar")
     public String cadastrarUsuario(Model model) {
         model.addAttribute("usuario", new Usuario());
-        return "usuarios/register";
+        return "public/register";
     }
 
     @GetMapping("/entrar")
     public String entrarUsuario(Model model) {
         model.addAttribute("usuario", new Usuario());
-        return "usuarios/login";
+        return "public/login";
     }
 
     @PostMapping("/cadastrar")
