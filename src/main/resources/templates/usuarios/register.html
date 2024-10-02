@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>ICS | Cadastrar Usuário</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+</head>
+
+<body>
+    <h1>Cadastrar Usuário</h1>
+    <form th:action="@{/usuarios/cadastrar}" th:object="${usuario}" method="post">
+        <!-- Campo Nome -->
+        <label for="nome">Nome:</label>
+        <input type="text" id="nome" th:field="*{nome}" placeholder="Digite o nome" required />
+        <br />
+
+        <!-- Campo E-mail -->
+        <label for="email">E-mail:</label>
+        <input type="email" id="email" th:field="*{email}" placeholder="Digite o e-mail" required />
+        <br />
+
+        <!-- Campo Senha -->
+        <label for="senha">Senha:</label>
+        <input type="password" id="senha" th:field="*{senha}" placeholder="Digite a senha" required />
+        <br />
+
+        <!-- Campo Nivel -->
+        <label for="nivel">Nível de Usuário:</label>
+        <select id="nivel" th:field="*{nivel}" class="form-select" aria-label="Nível de Usuário" required>
+            <option selected value="USER">User</option>
+            <option value="ADMIN">Admin</option>
+            <option value="MANAGER">Manager</option>
+        </select>
+        <br />
+
+        <!-- Campo Cargo -->
+        <label for="cargo">Cargo:</label>
+        <input type="text" id="cargo" th:field="*{cargo}" placeholder="Digite o cargo" required />
+        <br />
+
+        <!-- Botão para submeter o formulário -->
+        <button type="submit" class="btn btn-primary">Cadastrar</button>
+        <a th:href="@{/usuarios}" class="btn btn-danger">Voltar</a>
+    </form>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
