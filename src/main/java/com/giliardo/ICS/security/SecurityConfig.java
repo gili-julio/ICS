@@ -44,7 +44,6 @@ public class SecurityConfig {
                                                 .permitAll())
                                 .logout(logout -> logout
                                                 .logoutRequestMatcher(new AntPathRequestMatcher("/usuarios/logout"))
-                                                .permitAll()
                                                 .permitAll())
                                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class);
                 return http.build();
