@@ -32,7 +32,7 @@ public class AuthController {
     private final TokenService tokenService;
 
     @PostMapping("/login")
-    public ResponseEntity login(@RequestBody LoginRequestDTO body) {
+    public ResponseEntity<ResponseDTO> login(@RequestBody LoginRequestDTO body) {
         Usuario user = this.repository.findByEmail(body.email())
                 .orElseThrow(() -> new RuntimeException("User not found"));
         if (passwordEncoder.matches(body.senha(), user.getSenha())) {
@@ -43,7 +43,7 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity register(@RequestBody RegisterRequestDTO body) {
+    public ResponseEntity<ResponseDTO> register(@RequestBody RegisterRequestDTO body) {
         Optional<Usuario> user = this.repository.findByEmail(body.email());
 
         if (user.isEmpty()) {

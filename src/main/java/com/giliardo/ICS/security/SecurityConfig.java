@@ -13,6 +13,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
@@ -28,21 +29,21 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(csrf -> csrf.disable())
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/usuarios/entrar").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/usuarios/listar").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/").permitAll()
-                        .anyRequest().authenticated())
+                        .requestMatchers(HttpMethod.POST, "/auth/register").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/usuarios/auth/brinks").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/usuarios/listar").authenticated()
+                        .anyRequest().permitAll())
                 .formLogin(form -> form
                         .loginPage("/usuarios/entrar")
                         .usernameParameter("email")
                         .passwordParameter("senha")
+                        .loginProcessingUrl("/auth/login")
                         .defaultSuccessUrl("/usuarios/listar", true)
                         .permitAll())
-                .logout(logout -> logout.permitAll())
+                .logout(logout -> logout
+                        .logoutRequestMatcher(new AntPathRequestMatcher("/usuarios/logout")).permitAll()
+                        .permitAll())
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
