@@ -19,43 +19,45 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    @Autowired
-    private CustomUserDetailsService userDetailsService;
+        @Autowired
+        private CustomUserDetailsService userDetailsService;
 
-    @Autowired
-    SecurityFilter securityFilter;
+        @Autowired
+        SecurityFilter securityFilter;
 
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-                .csrf(csrf -> csrf.disable())
-                .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers(HttpMethod.POST, "/auth/register").authenticated()
-                        .requestMatchers(HttpMethod.GET, "/usuarios/auth/brinks").authenticated()
-                        .requestMatchers(HttpMethod.GET, "/usuarios/listar").authenticated()
-                        .anyRequest().permitAll())
-                .formLogin(form -> form
-                        .loginPage("/usuarios/entrar")
-                        .usernameParameter("email")
-                        .passwordParameter("senha")
-                        .loginProcessingUrl("/auth/login")
-                        .defaultSuccessUrl("/usuarios/listar", true)
-                        .permitAll())
-                .logout(logout -> logout
-                        .logoutRequestMatcher(new AntPathRequestMatcher("/usuarios/logout")).permitAll()
-                        .permitAll())
-                .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class);
-        return http.build();
-    }
+        @Bean
+        public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+                http
+                                .csrf(csrf -> csrf.disable())
+                                .authorizeHttpRequests(authorize -> authorize
+                                                .requestMatchers(HttpMethod.POST, "/auth/register").authenticated()
+                                                .requestMatchers(HttpMethod.GET, "/usuarios/cadastrar")
+                                                .authenticated()
+                                                .requestMatchers(HttpMethod.GET, "/usuarios/listar").authenticated()
+                                                .anyRequest().permitAll())
+                                .formLogin(form -> form
+                                                .loginPage("/usuarios/entrar")
+                                                .usernameParameter("email")
+                                                .passwordParameter("senha")
+                                                .loginProcessingUrl("/auth/login")
+                                                .defaultSuccessUrl("/usuarios/listar", true)
+                                                .permitAll())
+                                .logout(logout -> logout
+                                                .logoutRequestMatcher(new AntPathRequestMatcher("/usuarios/logout"))
+                                                .permitAll()
+                                                .permitAll())
+                                .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class);
+                return http.build();
+        }
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+        @Bean
+        public PasswordEncoder passwordEncoder() {
+                return new BCryptPasswordEncoder();
+        }
 
-    @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration)
-            throws Exception {
-        return authenticationConfiguration.getAuthenticationManager();
-    }
+        @Bean
+        public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration)
+                        throws Exception {
+                return authenticationConfiguration.getAuthenticationManager();
+        }
 }

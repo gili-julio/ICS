@@ -1,5 +1,7 @@
 package com.giliardo.ICS.controller;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -45,7 +47,12 @@ public class UsuarioController {
 
     @PostMapping("/cadastrar")
     public String salvarUsuario(@ModelAttribute Usuario usuario) {
-        usuarioRepository.save(usuario);
-        return "redirect:/usuarios";
+        Optional<Usuario> possibleUser = usuarioRepository.findByEmail(usuario.getEmail());
+        if (possibleUser.isEmpty()) {
+            usuarioRepository.save(usuario);
+            return "redirect:/usuarios";
+        }
+        return "redirect:/usuarios/cadastrar?error";
+
     }
 }
