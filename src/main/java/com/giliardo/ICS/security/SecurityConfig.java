@@ -30,21 +30,19 @@ public class SecurityConfig {
                 http
                                 .csrf(csrf -> csrf.disable())
                                 .authorizeHttpRequests(authorize -> authorize
-                                                .requestMatchers(HttpMethod.POST, "/auth/register").authenticated()
-                                                .requestMatchers(HttpMethod.GET, "/usuarios/cadastrar")
-                                                .authenticated()
-                                                .requestMatchers(HttpMethod.GET, "/usuarios/listar").authenticated()
-                                                .anyRequest().permitAll())
+                                                .requestMatchers(HttpMethod.GET, "/").permitAll()
+                                                .anyRequest().authenticated())
                                 .formLogin(form -> form
                                                 .loginPage("/usuarios/entrar")
                                                 .usernameParameter("email")
                                                 .passwordParameter("senha")
                                                 .loginProcessingUrl("/auth/login")
-                                                .defaultSuccessUrl("/usuarios/listar", true)
+                                                .defaultSuccessUrl("/usuarios", true)
                                                 .permitAll())
                                 .logout(logout -> logout
-                                                .logoutRequestMatcher(new AntPathRequestMatcher("/usuarios/logout"))
-                                                .permitAll())
+                                                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                                                .permitAll()
+                                                .logoutSuccessUrl("/"))
                                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class);
                 return http.build();
         }

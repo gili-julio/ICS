@@ -7,9 +7,19 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Table(name = "produto")
 @Entity(name = "produto")
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
+@EqualsAndHashCode(of = "id")
 public class Produto {
 
     @Id
@@ -25,61 +35,5 @@ public class Produto {
     @ManyToOne
     @JoinColumn(name = "loja_id")
     private Loja loja;
-
-    public Long getId() {
-        return this.id;
-    }
-
-    public String getNome() {
-        return this.nome;
-    }
-
-    public String getDescricao() {
-        return this.descricao;
-    }
-
-    public float getPrecoCusto() {
-        return this.precoCusto;
-    }
-
-    public float getPrecoVenda() {
-        return this.precoVenda;
-    }
-
-    public int getQtdEstoque() {
-        return this.qtdEstoque;
-    }
-
-    public Loja getLoja() {
-        return this.loja;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }
-
-    public void setPrecoCusto(float precoCusto) {
-        this.precoCusto = precoCusto;
-    }
-
-    public void setPrecoVenda(float precoVenda) {
-        this.precoVenda = precoVenda;
-    }
-
-    public void setQtdEstoque(int qtdEstoque) {
-        this.qtdEstoque = qtdEstoque;
-    }
-
-    public void setLoja(Loja loja) {
-        this.loja = loja;
-    }
 
 }

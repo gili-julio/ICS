@@ -26,11 +26,6 @@ public class UsuarioController {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
-    @GetMapping
-    public ResponseEntity<String> getUser() {
-        return ResponseEntity.ok("sucesso!");
-    }
-
     @GetMapping("/info")
     public String usuarioInfo(Model model) {
         // Obtém o usuário autenticado
@@ -51,7 +46,7 @@ public class UsuarioController {
         return "usuarios/info";
     }
 
-    @GetMapping("/listar")
+    @GetMapping
     public String listarUsuarios(Model model) {
         model.addAttribute("usuarios", usuarioRepository.findAll());
         return "usuarios/listar";
