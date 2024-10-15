@@ -51,6 +51,10 @@
                 </tr>
             </thead>
             <tbody>
+                <!-- Verifica se a lista de produtos está vazia e exibe uma mensagem -->
+                <tr th:if="${#lists.isEmpty(produtos)}">
+                    <td colspan="6" class="text-center">Nenhum produto cadastrado</td>
+                </tr>
                 <tr th:each="produto : ${produtos}">
                     <td>
                         <h5 th:text="${produto.nome}" class="font-medium"></h5>

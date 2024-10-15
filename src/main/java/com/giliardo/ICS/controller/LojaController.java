@@ -12,8 +12,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.giliardo.ICS.entity.Loja;
+import com.giliardo.ICS.entity.Produto;
 import com.giliardo.ICS.entity.Usuario;
 import com.giliardo.ICS.repository.LojaRepository;
+import com.giliardo.ICS.repository.ProdutoRepository;
 import com.giliardo.ICS.repository.UsuarioRepository;
 
 @Controller
@@ -25,7 +27,7 @@ public class LojaController {
     @Autowired
     private LojaRepository lojaRepository;
     @Autowired
-    private LojaRepository produtoRepository;
+    private ProdutoRepository produtoRepository;
 
     @GetMapping
     public String listarLojas(Model model) {
@@ -54,6 +56,34 @@ public class LojaController {
             model.addAttribute("loja", loja);
             model.addAttribute("produtos", loja.getProdutos());
             return "lojas/produtos";
+        } else {
+            return "redirect:/lojas";
+        }
+    }
+
+    @GetMapping("/{lojaId}/produtos/cadastrar")
+    public String cadastrarProduto(@PathVariable Long lojaId, Model model) {
+        Optional<Loja> lojaOpt = lojaRepository.findById(lojaId);
+
+        if (lojaOpt.isPresent()) {
+            Loja loja = lojaOpt.get();
+            model.addAttribute("loja", loja);
+            model.addAttribute("produto", new Produto());
+            return "produtos/register";
+        } else {
+            return "redirect:/lojas";
+        }
+    }
+
+    @PostMapping("/{lojaId}/produtos/cadastrar")
+    public String salvarProduto(@PathVariable Long lojaId, @ModelAttribute Produto produto) {
+        Optional<Loja> lojaOpt = lojaRepository.findById(lojaId);
+
+        if (lojaOpt.isPresent()) {
+            Loja loja = lojaOpt.get();
+            produto.setLoja(loja);
+            produtoRepository.save(produto);
+            return "redirect:/lojas/" + lojaId + "/produtos";
         } else {
             return "redirect:/lojas";
         }

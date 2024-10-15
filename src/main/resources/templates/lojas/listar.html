@@ -44,7 +44,7 @@
                     <div class="card-body">
                         <h5 class="card-title" th:text="${loja.nome}"></h5>
                         <p class="card-text" th:text="'Local: ' + ${loja.localizacao}"></p>
-                        <a th:href="@{/lojas/{id}(id=${loja.id})}"
+                        <a th:href="@{/lojas/{id}/produtos(id=${loja.id})}"
                             class="btn btn-outline-primary btn-circle btn-lg btn-circle ml-2">
                             <i class="fa fa-eye"></i>
                         </a>
